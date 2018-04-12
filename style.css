@@ -1,0 +1,65 @@
+.container{
+  display:block;
+  width:90%;
+  margin:0 auto;
+}
+#pane-1 {
+    height: 300px;
+  }
+  
+  #pane-2 {
+    height: 300px;
+    width:200px;
+  }
+  
+  .dropzone {
+    background-color: #ccc;
+    border-radius: 1px;
+    width: 98%;
+    transition: background-color 0.3s;
+    padding:10px;
+    margin-top:10px;
+  }
+  
+  .drop-active {
+    border-color: #aaa;
+  }
+  
+  .drop-target {
+    background-color: #29e;
+    border-color: #fff;
+    border-style: solid;
+  }
+  
+  .drag-drop {
+    display: inline-block;
+    width: 80px;
+    text-align: center;
+    padding: 2em 0.5em;
+  
+    color: #fff;
+    background-color: #29e;
+    border: solid 2px #fff;
+  
+    -webkit-transform: translate(0px, 0px);
+            transform: translate(0px, 0px);
+  
+    transition: background-color 0.3s;
+  }
+  
+  .drag-drop.can-drop {
+    color: #000;
+    background-color: #4e4;
+  }
+  .can-not-drop{
+    background:rgba(200,0,0,0.3);
+  }
+  header h1{
+    text-align: center;
+    background: #a5d;
+    color:#fff;
+    padding: 20px;
+  }
+  footer p{
+    text-align:center;
+  }
