@@ -52,7 +52,7 @@ var startPos = {x: 0,y: 0};
         // feedback the possibility of a drop
         dropzoneElement.classList.add('drop-target');
         draggableElement.classList.add('can-drop');
-        draggableElement.textContent = 'Dragged in';
+        draggableElement.textContent = 'Droppable';
         removeCanNotDropClass(draggableElement);
     },
     ondragleave: function (event) {
@@ -60,14 +60,14 @@ var startPos = {x: 0,y: 0};
         event.target.classList.remove('drop-target');
         event.relatedTarget.classList.remove('can-drop');
         event.relatedTarget.classList.add('can-not-drop');
-        event.relatedTarget.textContent = 'Dragged out';
+        event.relatedTarget.textContent = 'Undroppable';
         draggedOut = true;
         console.log(draggedOut);
     },
     ondrop: function (event) {
         event.relatedTarget.textContent = 'Dropped';
         draggedOut = false;
-        console.log(draggedOut);
+        
     },
     ondropdeactivate: function (event) {
         // remove active dropzone feedback
@@ -75,6 +75,8 @@ var startPos = {x: 0,y: 0};
         event.target.classList.remove('drop-target');
         if(draggedOut) {
             setAtPos(event.relatedTarget,startPos.x, startPos.y);
+            //TODO for demonstration 
+             event.relatedTarget.textContent ="Dropped";
         }
     }
     });
