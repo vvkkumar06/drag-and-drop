@@ -1,11 +1,14 @@
- // target elements with the "draggable" class
+
+var draggedOut = false;
+var startPos = {x: 0,y: 0};
+// target elements with the "draggable" class
  interact('.draggable')
         .draggable({
      // enable inertial throwing
      inertia: false,
      // keep the element within the area of it's parent
      restrict: {
-         restriction: ".dropzone",
+         restriction: ".container",
          endOnly: true,
          elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
      },
@@ -13,7 +16,11 @@
      autoScroll: true,
 
      onstart: function (event) {
-         console.log('onstart');
+         if(!draggedOut){
+             startPos.x = event.target.getAttribute('data-x') || 0;
+             startPos.y = event.target.getAttribute('data-y') || 0;
+         }
+         console.log(startPos.x,startPos.y);
      },
 
      // call this function on every dragmove event
@@ -46,21 +53,29 @@
         dropzoneElement.classList.add('drop-target');
         draggableElement.classList.add('can-drop');
         draggableElement.textContent = 'Dragged in';
-        interact('.draggable').draggable();
+        removeCanNotDropClass(draggableElement);
     },
     ondragleave: function (event) {
         // remove the drop feedback style
         event.target.classList.remove('drop-target');
         event.relatedTarget.classList.remove('can-drop');
+        event.relatedTarget.classList.add('can-not-drop');
         event.relatedTarget.textContent = 'Dragged out';
+        draggedOut = true;
+        console.log(draggedOut);
     },
     ondrop: function (event) {
         event.relatedTarget.textContent = 'Dropped';
+        draggedOut = false;
+        console.log(draggedOut);
     },
     ondropdeactivate: function (event) {
         // remove active dropzone feedback
         event.target.classList.remove('drop-active');
         event.target.classList.remove('drop-target');
+        if(draggedOut) {
+            setAtPos(event.relatedTarget,startPos.x, startPos.y);
+        }
     }
     });
 
@@ -78,4 +93,18 @@
     // update the position attributes
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);
+}
+    function setAtPos(target,x,y){
+         // translate the element
+    target.style.webkitTransform =
+    target.style.transform =
+    'translate(' + x + 'px, ' + y + 'px)';
+        	removeCanNotDropClass(target);
+        // update the position attributes
+        target.setAttribute('data-x', x);
+        target.setAttribute('data-y', y);
+    }
+
+    function removeCanNotDropClass(target){
+        target.classList.remove('can-not-drop');
     }
